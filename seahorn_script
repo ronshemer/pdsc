@@ -1,0 +1,56 @@
+**********************
+(property 1)
+**********************
+"">bench ; for filename in /synonym/benchmarks/cav-18/stackoverflow/*; do if [ "${filename##*.}" = "java" ]; then ./run_synonym.sh 1 $filename;fi done
+"">bench ; for filename in /synonym/benchmarks/cav-18/stackoverflow/*; do if [ "${filename##*.}" = "java" ]; then ./run_syn.sh 1 $filename;fi done
+"">bench ; for filename in /synonym/benchmarks/cav-18/stackoverflow/*; do if [ "${filename##*.}" = "java" ]; then ./run_descartes.sh 1 $filename;fi done
+
+**********************
+run_synonym.sh
+**********************
+ts=$(date +%s%N)
+result=$(synonym -p=$1 -m=synonym $2)
+tt=$((($(date +%s%N) - $ts)/1000000))
+file=$(echo `basename "$2"`)
+obeys="F"
+if echo "$result" | grep -q "OBEYS"; then
+        obeys="Y"
+fi
+if echo "$result" | grep -q "VIOLATES"; then
+        obeys="N"
+fi
+echo "$file ; 0.0$tt; $obeys" >> bench
+
+**********************
+run_syn.sh
+**********************
+ts=$(date +%s%N)
+result=$(synonym -p=$1 -m=syn $2)
+tt=$((($(date +%s%N) - $ts)/1000000))
+file=$(echo `basename "$2"`)
+obeys="F"
+if echo "$result" | grep -q "OBEYS"; then
+        obeys="Y"
+fi
+if echo "$result" | grep -q "VIOLATES"; then
+        obeys="N"
+fi
+echo "$file ; 0.0$tt; $obeys" >> bench
+
+**********************
+run_descartes.sh
+**********************
+ts=$(date +%s%N)
+result=$(synonym -p=$1 -m=descartes $2)
+tt=$((($(date +%s%N) - $ts)/1000000))
+file=$(echo `basename "$2"`)
+obeys="F"
+if echo "$result" | grep -q "OBEYS"; then
+        obeys="Y"
+fi
+if echo "$result" | grep -q "VIOLATES"; then
+        obeys="N"
+fi
+echo "$file ; 0.0$tt; $obeys" >> bench
+
+
