@@ -18,19 +18,19 @@ In each SMT2 file the k-safety problem consists of relational and non-relational
 The SMT2 file is structured as follows:
  
 - To define the original (non-composed) program, we use the following keywords and rules:    
-	End     a termination predicate for the original program, with a rule that defines it.
-	Inv     a predicate that stands for an invariant of the original program. 
+	End -    a termination predicate for the original program, with a rule that defines it.    
+	Inv -    a predicate that stands for an invariant of the original program. 
 			Inv appears in an init rule, transition rule, and termination (exit) rule. 
 			We never solve for Inv. It is only used to define the original program. 
 			(PDSC will find an invariant for the composed program)
  
-- To define the k-safety (relational) property we use the following keywords and rules:
-    rel*        used to represent a copy of a variable of the original program.
+- To define the k-safety (relational) property we use the following keywords and rules:    
+    rel* -       used to represent a copy of a variable of the original program.
                 each such copy defines a variable of the composed program.
                 each type requires a new relation, 
-                e.g. (rel1 x 0) denotes variable x of copy 0 with the same type as x.
-    RelInit     appears in a rule that defines the relational pre condition
-    RelBad      appears in a rule that defines the relational post condition
+                e.g. (rel1 x 0) denotes variable x of copy 0 with the same type as x.    
+    RelInit -    appears in a rule that defines the relational pre condition    
+    RelBad -     appears in a rule that defines the relational post condition
  
 - The predicate language for constructing an abstracted program is specified at the end of the SMT2 file as (CHC) predicates. The definition for each predicate is given by a rule. PDSC considers all rules except for the Inv, End, RelInit and RelBad rules mentioned above as defining abstraction predicates. Relational abstraction predicates are defined using the rel* predicates (that define copies of the variables). Non-relational predicates (i.e., ones defined over the variables of the original program) are automatically duplicated for each copy of the variables. 
 For example, in Power.smt2 we have the non-relational predicate y_gteq_0 that refers to variables of the original program (and will be automatically duplicated for each copy of the variables). We also have the relational predicate z0_eq_z1 defined over variables of the composed program.
@@ -46,9 +46,9 @@ COMMAND:
  (files in folder) sudo python pdsc.py -comparator -f <folder> -p <#property> [-log]
 
 The comparator programs (written in C) are available in the folder ‘comparators_C’.
-The possible values for the property parameter are 1, 2, and 3. Their meanings are:
-1: Antisymmetry - forall x,y. sgn(compare(x,y))=-sgn(compare(y,x))
-2: Transitivity - forall x,y,z. compare(x,y)>0 && compare(y,z)>0 => compare(x,z)
+The possible values for the property parameter are 1, 2, and 3. Their meanings are:    
+1: Antisymmetry - forall x,y. sgn(compare(x,y))=-sgn(compare(y,x))    
+2: Transitivity - forall x,y,z. compare(x,y)>0 && compare(y,z)>0 => compare(x,z)    
 3: forall x,y,z. compare(x,y) => sgn(compare(x,z))=sgn(compare(y,z))
 
 In order to reproduce the PDSC data for Fig. 2 run the command once for each property with comparators_C as input.
