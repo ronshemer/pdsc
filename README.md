@@ -42,7 +42,7 @@ COMPARATORS (Fig. 2)
 ===================
 
 COMMAND:     
-     (single file) sudo python pdsc.py -comparator -f <filename.c> -p <#property> [-log]
+     (single file) sudo python pdsc.py -comparator -f <filename.c> -p <#property> [-log]    
  (files in folder) sudo python pdsc.py -comparator -f <folder> -p <#property> [-log]
 
 The comparator programs (written in C) are available in the folder ‘comparators_C’.
