@@ -6,13 +6,13 @@ Reproducing experiments requires an ability to run Docker, which requires sudo a
 
 SEMANTIC COMPOSITION (Table 1)
 ============================
-COMMAND: 
+COMMAND:     
      sudo python pdsc.py -semantic -f <filename.smt2> [-log]
 
 The set of programs that require a semantic composition in order to prove the property are available in the folder semantic_SMT2, in smt2 format.
 To reproduce the results reported in Table 1 run the command for every file in the folder.
 
-HOW IT WORKS:
+HOW IT WORKS:    
 In each SMT2 file the k-safety problem consists of relational and non-relational (CHC) predicates and predicates for abstraction. 
 
 The SMT2 file is structured as follows:
@@ -41,7 +41,7 @@ PDSC parses the SMT2 file and verifies the property.
 COMPARATORS (Fig. 2)
 ===================
 
-COMMAND: 
+COMMAND:     
      (single file) sudo python pdsc.py -comparator -f <filename.c> -p <#property> [-log]
  (files in folder) sudo python pdsc.py -comparator -f <folder> -p <#property> [-log]
 
@@ -53,7 +53,7 @@ The possible values for the property parameter are 1, 2, and 3. Their meanings a
 
 In order to reproduce the PDSC data for Fig. 2 run the command once for each property with comparators_C as input.
 
-HOW IT WORKS:
+HOW IT WORKS:    
 PDSC first translates a given comparator program written in C to SMT2 format (with the structure explained above; in particular, it automatically generates predicates for the abstraction), and then runs the PDSC algorithm to verify the property.
 
 The C comparator programs encode Java comparator programs (as used for the evaluation of Synonym), where the arguments of the compare method are objects.
@@ -65,8 +65,8 @@ For example, if the type of object o1 has two fields f1,f2 then the “compare�
 -------------------------------------------------------
 The log flag is optional. When used, pdsc will print counterexample traces and the blocked composition assignments.
 
-EXAMPLES:
-sudo python pdsc.py  -comparator -f comparators_C/ArrayInt-false.c -p 2
+EXAMPLES:    
+sudo python pdsc.py  -comparator -f comparators_C/ArrayInt-false.c -p 2    
 sudo python pdsc.py -semantic -f semantic_SMT2/squares_sum.smt2 -log
 
 
@@ -80,7 +80,7 @@ Reproducing the comparator results (Fig. 2)
 ----------------------------------------------------------
 Run the following commands, where <#property> is a comparator property 1, 2 or 3 as mentioned above:
 
-sudo docker attach 5b4379934a48
+sudo docker attach 5b4379934a48    
 for filename in /synonym/benchmarks/cav-18/stackoverflow/*; do if [ "${filename##*.}" = "java" ]; then ./run_synonym.sh <#property> $filename; fi done
 
 The results will be written to a file named ‘table’.
@@ -89,51 +89,51 @@ Reproducing semantic examples (Table 1)
 --------------------------------------------------------
 The semantic_Java folder is copied to the container. Use the following commands to run each example.
 
-ArrayIntMod :
+ArrayIntMod :    
 synonym -p=1 -m=synonym semantic_Java/ArrayIntMod.java
 
-Power:
+Power:    
 synonym -p=13 -m=synonym semantic_Java/Power_swap.java
 
-SquaresSum:
+SquaresSum:    
 synonym -p=10 -m=synonym semantic_Java/SquaresSum.java
 [relies on modified Properties.hs]
 
-Sum:
+Sum:    
 synonym -p=13 -m=synonym semantic_Java/Sum_swap.java
 
-ArrayInsert:
+ArrayInsert:    
 synonym -p=13 -m=synonym semantic_Java/ArrayInsert_swap.java
 
 OUTPUT SUCCESS INDICATION (pdsc and synonym)
 ==========================
-PDSC may return with one of the following success or failure message:
-1.Proved by invariant
-2.Failed to prove (starvation detected)
+PDSC may return with one of the following success or failure message:    
+1.Proved by invariant    
+2.Failed to prove (starvation detected)    
 3.Failed to find semantic self-composition
 
 In the table output 1 is denoted as Y and 2,3 are denoted as N. If an unrecoverable runtime error occurs the result is denoted as F.
 
-PLATFORM USED FOR EXPERIMENTS
-Windows 10 64bit
-RAM 16GB
-I7-8650U @ 2.11Ghz
+PLATFORM USED FOR EXPERIMENTS    
+Windows 10 64bit    
+RAM 16GB    
+I7-8650U @ 2.11Ghz    
 
 Setup on a new machine
 ==================
-1.build z3:
-1.1. clone z3 repository master commit 1297eeb817c7b0340f187bee35888c3f51bce569
-1.2. mkdir build;cd build
-1.3. cmake -DBUILD_PYTHON_BINDINGS=TRUE -DINSTALL_PYTHON_BINDINGS=TRUE ../
-1.4. make -j8
-1.5. sudo make install
-2. run SeaHorn container:
-2.1. install docker-ce
-2.2. docker run -it seahorn/seahorn
-3.clone pdsc repository
-4. Build synonym container
-4.1. cd to pdsc-src/synonym 
-4.2. docker build -t synonym/synonym
-4.3. docker run -it synonym/synonym /bin/bash
-5. docker attach <synonym container id>
+1.build z3:    
+1.1. clone z3 repository master commit 1297eeb817c7b0340f187bee35888c3f51bce569    
+1.2. mkdir build;cd build    
+1.3. cmake -DBUILD_PYTHON_BINDINGS=TRUE -DINSTALL_PYTHON_BINDINGS=TRUE ../    
+1.4. make -j8    
+1.5. sudo make install    
+2. run SeaHorn container:    
+2.1. install docker-ce    
+2.2. docker run -it seahorn/seahorn    
+3.clone pdsc repository    
+4. Build synonym container    
+4.1. cd to pdsc-src/synonym    
+4.2. docker build -t synonym/synonym    
+4.3. docker run -it synonym/synonym /bin/bash    
+5. docker attach <synonym container id>    
 
