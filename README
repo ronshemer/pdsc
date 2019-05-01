@@ -18,8 +18,10 @@ In each SMT2 file the k-safety problem consists of relational and non-relational
 The SMT2 file is structured as follows:
  
 - To define the original (non-composed) program, we use the following keywords and rules:
-	End     a termination predicate for the original program, with a rule that defines it.
-    Inv     a predicate that stands for an invariant of the original program. 
+
+End     a termination predicate for the original program, with a rule that defines it.
+
+Inv     a predicate that stands for an invariant of the original program. 
 			Inv appears in an init rule, transition rule, and termination (exit) rule. 
 			We never solve for Inv. It is only used to define the original program. 
 			(PDSC will find an invariant for the composed program)
