@@ -85,8 +85,7 @@ def main():
     
     print_table = False
     file_list = []
-    table_true = ""
-    table_false = ""
+    table = ""
 
     if args.comparator and os.path.isdir(args.file):
         print_table=True
@@ -108,14 +107,13 @@ def main():
             pp_delta = pp_end - pp_start
             print "Pre-processing time:\t" + str(pp_delta.total_seconds()) + " \nSolver time:\t" + str(delta.total_seconds()) + "\nTotal time:\t"+     str(delta.total_seconds()+pp_delta.total_seconds()) + "\nIteration count:\t"+str(smt_count) + "\nPredicate count:\t" + str(num_preds)
             if "violated" in msg or "starvation" in msg:
-                table_false += filename + ";\t" + str(delta.total_seconds()) + ";\t" + str(pp_delta.total_seconds() +delta.total_seconds()) + ";\t" + "N" + ";" + str(smt_count) + ";" + str(num_preds) + "\n"
+                table += filename + ";\t" + str(delta.total_seconds()) + ";\t" + str(pp_delta.total_seconds() +delta.total_seconds()) + ";\t" + "N" + ";" + str(smt_count) + ";" + str(num_preds) + "\n"
             else:
-                table_true += filename + ";\t" + str(delta.total_seconds()) + ";\t" + str(pp_delta.total_seconds() + delta.total_seconds()) + ";\t" + "Y" + ";" + str(smt_count) + ";" + str(num_preds) + "\n"
+                table += filename + ";\t" + str(delta.total_seconds()) + ";\t" + str(pp_delta.total_seconds() + delta.total_seconds()) + ";\t" + "Y" + ";" + str(smt_count) + ";" + str(num_preds) + "\n"
         except:
-            table_false += curr_file + ";\t" + str(0) + ";\t" + str(0) + ";\t" + "F" + ";" + str(0) + ";" + str(0) + "\n"
+            table += curr_file + ";\t" + str(0) + ";\t" + str(0) + ";\t" + "F" + ";" + str(0) + ";" + str(0) + "\n"
     if print_table:
-        print table_true
-        print table_false
+        print table
 
 if __name__ == '__main__':
     sys.exit(main())
