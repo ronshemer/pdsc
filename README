@@ -1,8 +1,8 @@
-The following are the instructions for reproducing the experiments of the paper Property Directed Self Composition (PDSC) accepted to CAV 2019. These are instructions for using the provided Virtual Machine (username cav19, password ae). Instructions on setting up the tool on another machine are provided at the end of this file
+The following are the instructions for reproducing the experiments of the paper Property Directed Self Composition (PDSC) accepted to CAV 2019 using the provided Virtual Machine (username cav19, password ae). Instructions on setting up the tool on another machine are provided at the end of this file.
 
 The original source code and benchmarks are available on bitbucket at https://bitbucket.org/sharonsh/pdsc/src. They are also included in the folder pdsc-src on the Virtual Machine.
 
-Reproducing experiments requires an ability to run Docker, which requires sudo access (password is ae)
+Reproducing experiments requires an ability to run Docker, which requires sudo access (password is ae).
 
 SEMANTIC COMPOSITION (Table 1)
 ============================
