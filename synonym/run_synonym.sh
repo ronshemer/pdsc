@@ -9,5 +9,5 @@ fi
 if echo "$result" | grep -q "VIOLATES"; then
         obeys="N"
 fi
-echo "$file ; 0.0$tt; $obeys" >> table
+echo "$file ; $tt; $obeys" >> table
 
