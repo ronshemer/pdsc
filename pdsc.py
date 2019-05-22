@@ -97,7 +97,7 @@ def main():
             filename = get_smt2(curr_file) if args.comparator else curr_file
             print "PDSC: Verifying " + filename
             pp_start = datetime.datetime.now()
-            solver = DynamicSelfCompositionPDR(filename, force_predicate_abstraction=True, is_comparator=args.comparator, method_name="compare",     explicit_conposition_function=True,print_log=args.log,prop=args.property)
+            solver = DynamicSelfCompositionPDR(filename, force_predicate_abstraction=True, is_comparator=args.comparator, method_name="compare", bmc="True", explicit_conposition_function=True,print_log=args.log,prop=args.property)
             pp_end = datetime.datetime.now()
             start = datetime.datetime.now()
             msg, smt_count, num_preds = solver.solve()
