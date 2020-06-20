@@ -20,7 +20,7 @@ class Transformer:
     def __init__(self, force_predicate_abstraction, method_name,entry_to_memory_map,prop):
         self.ctx = z3.Context()
         self.file_name = None
-	self.prop = prop
+        self.prop = prop
         self.pc_var = z3.Int("pc", self.ctx)
         self.pcp_var = z3.Int("pc_p", self.ctx)
         self.fp = None
@@ -219,7 +219,7 @@ class Transformer:
         elif f.sort() == z3.ArraySort([z3.IntSort(ctx=self.ctx), z3.IntSort(ctx=self.ctx)]):
             return Array("%s" % (self.curr_rule.var_name(total - f_num)), IntSort(self.ctx), IntSort(self.ctx))
         else:
-            print 'unsupported variable sort. only Int, Bool, Array(Int Int) are supported.'
+            print("unsupported variable sort. only Int, Bool, Array(Int Int) are supported.")
             return None
 
     def try_predicate(self, body, head):

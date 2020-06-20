@@ -1,1 +1,6 @@
 git checkout -b pdsc_27_jan 1297eeb817c7b0340f187bee35888c3f51bce569
+-----
+git checkout -b z3-4.8.8 ad55a1f1c617a7f0c3dd735c0780fc758424c7f1
+cmake -G "Unix Makefiles" -DZ3_BUILD_PYTHON_BINDINGS=TRUE -DZ3_INSTALL_PYTHON_BINDINGS=TRUE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PYTHON_PKG_DIR=/home/ron/.local/lib/python3.8/site-packages ../
+make -j17
+sudo make install

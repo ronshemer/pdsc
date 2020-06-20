@@ -1,4 +1,4 @@
-from z3 import z3
+import z3
 
 from explicit_composition import ExplicitComposition
 
@@ -169,7 +169,7 @@ class DynamicProgram:
             elif v.sort() == z3.ArraySort([z3.IntSort(self.ctx), z3.IntSort(self.ctx)]):
                 sc_v = z3.Array(str(v) + "_" + str(copy_id), z3.IntSort(self.ctx), z3.IntSort(self.ctx))
             else:
-                print 'unsupported sort: ' + str(v.sort())
+                print("unsupported sort: " + str(v.sort()))
                 continue
             sc_v_name = str(sc_v)
             if sc_v_name in self.predefined_rel_vars.keys():

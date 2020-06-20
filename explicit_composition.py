@@ -1,4 +1,4 @@
-from z3 import z3
+import z3
 
 
 class ExplicitComposition:

@@ -1,5 +1,5 @@
 import time
-from z3 import z3
+import z3
 
 from bitstring import BitArray
 from comparator_program_transformer import comparator_transform
@@ -8,8 +8,8 @@ from program_transformer import transform
 
 class DynamicSelfCompositionPDR:
     def __init__(self, program_path, force_predicate_abstraction, is_comparator, explicit_conposition_function, method_name=None,concrete_array_vars=False,bmc=False,print_log=False,prop=None):
-	if prop is not None and prop == 1:
-		prop=0
+        if prop is not None and prop == 1:
+            prop=0
         self.force_predicate_abstraction = force_predicate_abstraction
         self.bmc = bmc
         self.concrete_dp = None
@@ -31,12 +31,12 @@ class DynamicSelfCompositionPDR:
             # if time.time() > timeout:
             #     return "Timeout reached",self.smt_queries_count
             if self.print_log:
-                print "Counter-example trace:\n" + self.print_trace(trace)
+                print("Counter-example trace:\n" + self.print_trace(trace))
 
             if self.bmc and self.longest_abstract_trace == 0 and len(trace)<4 and self.dynamic_program.k == 3:
                 self.longest_abstract_trace = len(trace)
                 if self.print_log:
-                    print 'running bmc of depth '+str(self.longest_abstract_trace)
+                    print("running bmc of depth "+str(self.longest_abstract_trace))
                 if self.run_bmc():
                     return "Counter-example found. Property is violated.", self.smt_queries_count,num_preds
 
@@ -76,7 +76,7 @@ class DynamicSelfCompositionPDR:
                     self.dynamic_program.possible_assignments - 1) or self.check_possible_cutoff(bad_predecessor,
                                                                                                  bad_predecessor_assignment):
                 if self.print_log:
-                    print "Extending bad with state " + bad_predecessor.pretty_print(self.dynamic_program) + "\n"
+                    print("Extending bad with state " + bad_predecessor.pretty_print(self.dynamic_program) + "\n")
                 self.dynamic_program.extend_bad(bad_predecessor)
                 self.blocked_compositions.pop(bad_predecessor)
                 trace = trace[:-1]
@@ -84,9 +84,7 @@ class DynamicSelfCompositionPDR:
                     return False
             else:
                 if self.print_log:
-                    print "Blocking composition assignment " + str(
-                        bad_predecessor_assignment) + " for state\n " + bad_predecessor.pretty_print(
-                        self.dynamic_program) + "\n"
+                    print("Blocking composition assignment " + str(bad_predecessor_assignment) + " for state\n " + bad_predecessor.pretty_print(self.dynamic_program) + "\n")
                 self.blocked_compositions[bad_predecessor].append(bad_predecessor_assignment)
                 if self.dynamic_program.use_explicit_conposition_function:
                     self.dynamic_program.change_assignment(bad_predecessor, self.get_next_assignment(bad_predecessor))
@@ -124,7 +122,7 @@ class DynamicSelfCompositionPDR:
             return self.get_state_move_trace(answer)
 
     def print_statistics(self):
-        print str(self.smt_queries_count) + " SMT queries performed."
+        print(str(self.smt_queries_count) + " SMT queries performed.")
 
     def export_inv_lemmas(self):
         level = 0

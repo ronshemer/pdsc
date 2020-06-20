@@ -1,14 +1,11 @@
-import __builtin__
 import argparse
 import io
 import tarfile 
 import time 
-
-__builtin__.Z3_LIB_DIRS = ['/usr/local/lib/']
-
 from z3 import *
 import datetime
 import docker
+import sys
 
 from dynamic_sc_pdr import DynamicSelfCompositionPDR
 import os
@@ -62,12 +59,12 @@ def copy_from_container(cont, filename):
     return '/tmp/'+filename
 
 def get_smt2(c_file):
-    print c_file+': Translating to smt2 with SeaHorn'
+    print (c_file+': Translating to smt2 with SeaHorn')
     client = docker.from_env()
     seahorn_container = None
     for container in client.containers.list(all=True):
-	if 'seahorn' in str(container.image):
-	    seahorn_container = container
+        if 'seahorn' in str(container.image):
+            seahorn_container = container
     seahorn_container.start()
     copy_to_container(seahorn_container,c_file)
     seahorn_container.exec_run('bash run_seahorn.sh',workdir='/opt/seahorn')
@@ -93,9 +90,9 @@ def main():
     else:
         file_list = [args.file]
     for curr_file in file_list:
-	try:
+        try:
             filename = get_smt2(curr_file) if args.comparator else curr_file
-            print "PDSC: Verifying " + filename
+            print("PDSC: Verifying " + filename)
             pp_start = datetime.datetime.now()
             solver = DynamicSelfCompositionPDR(filename, force_predicate_abstraction=True, is_comparator=args.comparator, method_name="compare", bmc="True", explicit_conposition_function=True,print_log=args.log,prop=args.property)
             pp_end = datetime.datetime.now()
@@ -105,7 +102,7 @@ def main():
             print(msg)
             delta = end - start
             pp_delta = pp_end - pp_start
-            print "Pre-processing time:\t" + str(pp_delta.total_seconds()) + " \nSolver time:\t" + str(delta.total_seconds()) + "\nTotal time:\t"+     str(delta.total_seconds()+pp_delta.total_seconds()) + "\nIteration count:\t"+str(smt_count) + "\nPredicate count:\t" + str(num_preds)
+            print("Pre-processing time:\t" + str(pp_delta.total_seconds()) + " \nSolver time:\t" + str(delta.total_seconds()) + "\nTotal time:\t"+     str(delta.total_seconds()+pp_delta.total_seconds()) + "\nIteration count:\t"+str(smt_count) + "\nPredicate count:\t" + str(num_preds))
             if "violated" in msg or "starvation" in msg:
                 table += filename + ";\t" + str(delta.total_seconds()) + ";\t" + str(pp_delta.total_seconds() +delta.total_seconds()) + ";\t" + "N" + ";" + str(smt_count) + ";" + str(num_preds) + "\n"
             else:
@@ -113,7 +110,7 @@ def main():
         except:
             table += curr_file + ";\t" + str(0) + ";\t" + str(0) + ";\t" + "F" + ";" + str(0) + ";" + str(0) + "\n"
     if print_table:
-        print table
+        print(table)
 
 if __name__ == '__main__':
     sys.exit(main())

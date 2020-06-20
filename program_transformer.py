@@ -157,7 +157,7 @@ class Transformer:
         elif f.sort() == z3.ArraySort([z3.IntSort(ctx=self.ctx), z3.IntSort(ctx=self.ctx)]):
             return Array("%s" % (self.curr_rule.var_name(total - f_num)), IntSort(self.ctx), IntSort(self.ctx))
         else:
-            print 'unsupported variable sort. only Int, Bool, Array(Int Int) are supported.'
+            print("unsupported variable sort. only Int, Bool, Array(Int Int) are supported.")
             return None
 
     def get_pred_from_body(self, body):
@@ -237,7 +237,7 @@ class Transformer:
                     elif single_copy_var.sort() == z3.ArraySort([z3.IntSort(self.ctx), z3.IntSort(self.ctx)]):
                         new_var = Array(var_name, IntSort(self.ctx), IntSort(self.ctx))
                     else:
-                        print 'unsupported variable sort. only Int, Bool, Array(Int Int) are supported.'
+                        print("unsupported variable sort. only Int, Bool, Array(Int Int) are supported.")
                     self.rel_vars[var_name] = new_var
                 subst.append((pred, self.rel_vars[var_name]))
             self.subst_rel_vars(expr, subst)
