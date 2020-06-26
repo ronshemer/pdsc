@@ -50,10 +50,7 @@ class Transformer:
         self.file_name = file_path.split('/')[len(file_path.split('/')) - 1]
         self.fp = Fixedpoint(ctx=self.ctx)
         self.fp.parse_file(file_path)
-        if self.file_name == "ArrayInt_unbalanced_p2.smt2":
-            dp = DynamicProgram(False,self.ctx,k=3)
-        else:
-            dp = DynamicProgram(False, self.ctx)
+        dp = DynamicProgram(False, self.ctx)
 
         for r in self.fp.get_rules():
             self.curr_rule = r

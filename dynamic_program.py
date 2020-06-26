@@ -780,7 +780,7 @@ class DynamicProgram:
 
             for tr_cond, xs, xps in tr_tuples:
                 const = self.get_varp_constraints(xs, xps, inv_varsp)
-                copy_vars_subts = self.get_copy_vars_subts(xs + inv_varsp.values(), i, first_time)
+                copy_vars_subts = self.get_copy_vars_subts(xs + list(inv_varsp.values()), i, first_time)
 
                 sc_vs = [sc_v for v, sc_v in copy_vars_subts]
                 self.declared_vars.extend(sc_vs)
