@@ -1,7 +1,13 @@
 import unittest
-from dynamic_sc_pdr import DynamicSelfCompositionPDR
+from dynamic_sc_pdr import DynamicSelfCompositionPDR 
 
 class TestSemanticExamples(unittest.TestCase):
+
+    def test_Sum_pc(self):
+        filename = "./semantic_SMT2/Sum_pc.smt2"
+        solver = DynamicSelfCompositionPDR(filename, force_predicate_abstraction=True, is_comparator=False, bmc=True, explicit_conposition_function=True,print_log=True)
+        result = solver.solve()
+        print("result: "+str(result))
 
     def test_ArrayInsert(self):
         filename = "./semantic_SMT2/ArrayInsert.smt2"
@@ -42,12 +48,6 @@ class TestSemanticExamples(unittest.TestCase):
 
     def test_SquaresSum(self):
         filename = "./semantic_SMT2/SquaresSum.smt2"
-        solver = DynamicSelfCompositionPDR(filename, force_predicate_abstraction=True, is_comparator=False, bmc=True, explicit_conposition_function=True,print_log=True)
-        result = solver.solve()
-        print("result: "+str(result))
-
-    def test_Sum_pc(self):
-        filename = "./semantic_SMT2/Sum_pc.smt2"
         solver = DynamicSelfCompositionPDR(filename, force_predicate_abstraction=True, is_comparator=False, bmc=True, explicit_conposition_function=True,print_log=True)
         result = solver.solve()
         print("result: "+str(result))
