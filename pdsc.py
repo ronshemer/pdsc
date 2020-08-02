@@ -29,12 +29,15 @@ def copy_to_container(cont, artifact_file):
 def create_archive(artifact_file):
     pw_tarstream = io.BytesIO()
     pw_tar = tarfile.TarFile(fileobj=pw_tarstream, mode='w')
-    file_data = open(artifact_file, 'r').read()
+    file_data = open(artifact_file, 'rb').read()
     tarinfo = tarfile.TarInfo(name=os.path.basename(artifact_file))
     tarinfo.size = len(file_data)
     tarinfo.mtime = time.time()
     # tarinfo.mode = 0600
-    pw_tar.addfile(tarinfo, io.BytesIO(file_data))
+    try:
+        pw_tar.addfile(tarinfo, io.BytesIO(file_data))
+    except:
+        print("Unexpected error:", sys.exc_info()[0])
     pw_tar.close()
     pw_tarstream.seek(0)
     return pw_tarstream
@@ -51,8 +54,11 @@ def copy_from_container(cont, filename):
     smt_file = my_tar.getmembers()[0]
     f=my_tar.extractfile(smt_file)
     content=f.read()
-    out_file=open('/tmp/'+filename,'w')
-    out_file.write(content)
+    out_file=open('/tmp/'+filename,'wb')
+    try:
+        out_file.write(content)
+    except:
+        print("Unexpected error:", sys.exc_info()[0])
     my_tar.close()
     out_file.flush()
     out_file.close()
@@ -65,9 +71,12 @@ def get_smt2(c_file):
     for container in client.containers.list(all=True):
         if 'seahorn' in str(container.image):
             seahorn_container = container
+            print("working with "+container.id+" ("+str(container.image)+")")
+            break
     seahorn_container.start()
     copy_to_container(seahorn_container,c_file)
     seahorn_container.exec_run('bash run_seahorn.sh',workdir='/opt/seahorn')
+    print ('bash run_seahorn.sh')
     return copy_from_container(seahorn_container,os.path.basename(c_file)[:-1]+'smt2')
 
 def main():
@@ -108,6 +117,7 @@ def main():
             else:
                 table += filename + ";\t" + str(delta.total_seconds()) + ";\t" + str(pp_delta.total_seconds() + delta.total_seconds()) + ";\t" + "Y" + ";" + str(smt_count) + ";" + str(num_preds) + "\n"
         except:
+            print("Unexpected error:", sys.exc_info()[0])
             table += curr_file + ";\t" + str(0) + ";\t" + str(0) + ";\t" + "F" + ";" + str(0) + ";" + str(0) + "\n"
     if print_table:
         print(table)
