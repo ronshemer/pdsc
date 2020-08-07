@@ -5,15 +5,47 @@ from bitstring import BitArray
 from comparator_program_transformer import comparator_transform
 from program_transformer import transform
 
+class SolverResult:
+    def __init__(self, filename, status, num_smt_queries, num_predicates, invariant = None):
+        self.status = status
+        self.num_predicates = num_predicates
+        self.num_smt_queries = num_smt_queries
+        self.invariant = invariant
+        self.filename = filename
+    
+    def smt_count(self):
+        return self.num_smt_queries
+
+    def predicate_count(self):
+        return self.num_predicates
+
+    def to_table_format(self, pp_delta, delta):
+        if self.status == "violated" or self.status == "starvation":
+            result_sign = "N"
+        else:
+            result_sign = "Y"
+        return self.filename + ";\t" + str(delta.total_seconds()) + ";\t" + str(pp_delta.total_seconds() +delta.total_seconds()) + ";\t" + result_sign + ";" + str(self.smt_count()) + ";" + str(self.predicate_count()) + "\n"
+
+    def get_status_msg(self):
+        if self.status == "violated":
+            return "Counter-example found. Property is violated."
+        if self.status == "fail":
+            return "Failed to find semantic self-composition. Either the property is violated or not enough predicates were supplied."
+        if self.status == "success":
+            success_msg = "Proved by invariant:\n"
+            success_msg += self.invariant
+            return success_msg
+        if self.status == "starvation":
+            return "Failed to prove (starvation detected)"
 
 class DynamicSelfCompositionPDR:
-    def __init__(self, program_path, force_predicate_abstraction, is_comparator, explicit_conposition_function, method_name=None,concrete_array_vars=False,bmc=False,print_log=False,prop=None):
+    def __init__(self, filename, force_predicate_abstraction, is_comparator, explicit_conposition_function, method_name=None,concrete_array_vars=False,bmc=False,print_log=False,prop=None):
         if prop is not None and prop == 1:
             prop=0
         self.force_predicate_abstraction = force_predicate_abstraction
         self.bmc = bmc
         self.concrete_dp = None
-        self.dynamic_program = self.sc_program_from_file(program_path, is_comparator, method_name,concrete_array_vars,prop)
+        self.dynamic_program = self.sc_program_from_file(filename, is_comparator, method_name,concrete_array_vars,prop)
         self.dynamic_program.use_explicit_conposition_function = explicit_conposition_function
         self.ctx = self.dynamic_program.ctx
         self.smt_queries_count = 0
@@ -22,6 +54,7 @@ class DynamicSelfCompositionPDR:
         self.blocked_compositions = {}
         self.longest_abstract_trace = 0
         self.print_log=print_log
+        self.filename = filename
 
     def solve(self):
         num_preds = len(self.dynamic_program.abstract_var_names) if self.dynamic_program.is_predicate_abstraction else 0
@@ -38,10 +71,10 @@ class DynamicSelfCompositionPDR:
                 if self.print_log:
                     print("running bmc of depth "+str(self.longest_abstract_trace))
                 if self.run_bmc():
-                    return "Counter-example found. Property is violated.", self.smt_queries_count,num_preds
+                    return SolverResult(self.filename, "violated", self.smt_queries_count,num_preds)
 
             if not self.dynamic_program.is_predicate_abstraction:
-                return "Counter-example found. Property is violated.",self.smt_queries_count,num_preds
+                return SolverResult(self.filename, "violated", self.smt_queries_count,num_preds)
 
             if self.dynamic_program.default_composition:
                 self.dynamic_program.default_composition = False
@@ -50,7 +83,7 @@ class DynamicSelfCompositionPDR:
             fixed = self.block_or_extend_bad(trace)
             if not fixed:
                 self.print_statistics()
-                return "Failed to find semantic self-composition. Either the property is violated or not enough predicates were supplied.",self.smt_queries_count,num_preds
+                return SolverResult(self.filename, "fail", self.smt_queries_count,num_preds)
             trace = self.find_cex()
 
         inv = self.get_invariant()
@@ -58,9 +91,9 @@ class DynamicSelfCompositionPDR:
             if not self.check_starvation(inv):
                 # invariant starves at least one copy
                 self.print_statistics()
-                return "Failed to prove (starvation detected)",self.smt_queries_count,num_preds
+                return SolverResult(self.filename, "starvation", self.smt_queries_count,num_preds)
         self.print_statistics()
-        return "Proved by invariant:\n" + str(inv),self.smt_queries_count,num_preds
+        return SolverResult(self.filename, "success", self.smt_queries_count,num_preds,str(inv))
 
     def block_or_extend_bad(self, trace):
         if len(trace) <= 1:
@@ -240,7 +273,7 @@ class DynamicSelfCompositionPDR:
     def check_possible_cutoff(self, state, assignment_to_disable):
         #return False-> no cutoff, return True -> extend bad
         if self.dynamic_program.k == 2:
-            if assignment_to_disable is 2:
+            if assignment_to_disable == 2:
                 if state in self.blocked_compositions and len(self.blocked_compositions[state]) > 0:
                     copy_to_check = 1 - self.blocked_compositions[state][0]
                 else:

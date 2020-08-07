@@ -8,6 +8,7 @@ import docker
 import sys
 
 from dynamic_sc_pdr import DynamicSelfCompositionPDR
+from dynamic_sc_pdr import SolverResult
 import os
 
 def is_valid_file(parser, arg):
@@ -106,21 +107,25 @@ def main():
             solver = DynamicSelfCompositionPDR(filename, force_predicate_abstraction=True, is_comparator=args.comparator, method_name="compare", bmc="True", explicit_conposition_function=True,print_log=args.log,prop=args.property)
             pp_end = datetime.datetime.now()
             start = datetime.datetime.now()
-            msg, smt_count, num_preds = solver.solve()
+            solver_result = solver.solve()
             end = datetime.datetime.now()
-            print(msg)
             delta = end - start
             pp_delta = pp_end - pp_start
-            print("Pre-processing time:\t" + str(pp_delta.total_seconds()) + " \nSolver time:\t" + str(delta.total_seconds()) + "\nTotal time:\t"+     str(delta.total_seconds()+pp_delta.total_seconds()) + "\nIteration count:\t"+str(smt_count) + "\nPredicate count:\t" + str(num_preds))
-            if "violated" in msg or "starvation" in msg:
-                table += filename + ";\t" + str(delta.total_seconds()) + ";\t" + str(pp_delta.total_seconds() +delta.total_seconds()) + ";\t" + "N" + ";" + str(smt_count) + ";" + str(num_preds) + "\n"
-            else:
-                table += filename + ";\t" + str(delta.total_seconds()) + ";\t" + str(pp_delta.total_seconds() + delta.total_seconds()) + ";\t" + "Y" + ";" + str(smt_count) + ";" + str(num_preds) + "\n"
+            print_result(pp_delta, delta, solver_result)
+            table += solver_result.to_table_format(pp_delta, delta)
         except:
             print("Unexpected error:", sys.exc_info()[0])
             table += curr_file + ";\t" + str(0) + ";\t" + str(0) + ";\t" + "F" + ";" + str(0) + ";" + str(0) + "\n"
     if print_table:
         print(table)
+
+def print_result(pp_delta, delta, solver_result):
+    print(solver_result.get_status_msg())
+    print("Pre-processing time:\t" + str(pp_delta.total_seconds()) + " \n")
+    print("Solver time:\t" + str(delta.total_seconds()) + "\n")
+    print("Total time:\t"+     str(delta.total_seconds()+pp_delta.total_seconds()) + "\n")
+    print("Iteration count:\t"+str(solver_result.smt_count()) + "\n")
+    print("Predicate count:\t" + str(solver_result.predicate_count()))
 
 if __name__ == '__main__':
     sys.exit(main())
