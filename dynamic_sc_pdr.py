@@ -6,6 +6,11 @@ from comparator_program_transformer import comparator_transform
 from program_transformer import transform
 
 class SolverResult:
+    VIOLATED = "violated"
+    FAIL = "fail"
+    SUCCESS = "success"
+    STARVE = "starvation"
+
     def __init__(self, filename, status, num_smt_queries, num_predicates, invariant = None):
         self.status = status
         self.num_predicates = num_predicates
@@ -27,15 +32,15 @@ class SolverResult:
         return self.filename + ";\t" + str(delta.total_seconds()) + ";\t" + str(pp_delta.total_seconds() +delta.total_seconds()) + ";\t" + result_sign + ";" + str(self.smt_count()) + ";" + str(self.predicate_count()) + "\n"
 
     def get_status_msg(self):
-        if self.status == "violated":
+        if self.status == VIOLATED:
             return "Counter-example found. Property is violated."
-        if self.status == "fail":
+        if self.status == FAIL:
             return "Failed to find semantic self-composition. Either the property is violated or not enough predicates were supplied."
-        if self.status == "success":
+        if self.status == SUCCESS:
             success_msg = "Proved by invariant:\n"
             success_msg += self.invariant
             return success_msg
-        if self.status == "starvation":
+        if self.status == STARVE:
             return "Failed to prove (starvation detected)"
 
 class DynamicSelfCompositionPDR:
