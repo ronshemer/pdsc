@@ -1,2 +1,5 @@
 z3
 *.pyc
+.vscode/.ropeproject/config.py
+.vscode/.ropeproject/objectdb
+z3
