@@ -32,15 +32,15 @@ class SolverResult:
         return self.filename + ";\t" + str(delta.total_seconds()) + ";\t" + str(pp_delta.total_seconds() +delta.total_seconds()) + ";\t" + result_sign + ";" + str(self.smt_count()) + ";" + str(self.predicate_count()) + "\n"
 
     def get_status_msg(self):
-        if self.status == VIOLATED:
+        if self.status == SolverResult.VIOLATED:
             return "Counter-example found. Property is violated."
-        if self.status == FAIL:
+        if self.status == SolverResult.FAIL:
             return "Failed to find semantic self-composition. Either the property is violated or not enough predicates were supplied."
-        if self.status == SUCCESS:
+        if self.status == SolverResult.SUCCESS:
             success_msg = "Proved by invariant:\n"
             success_msg += self.invariant
             return success_msg
-        if self.status == STARVE:
+        if self.status == SolverResult.STARVE:
             return "Failed to prove (starvation detected)"
 
 class DynamicSelfCompositionPDR:

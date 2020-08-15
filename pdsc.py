@@ -5,7 +5,7 @@ import time
 from z3 import *
 import datetime
 import docker
-import sys
+import sys, traceback
 
 from dynamic_sc_pdr import DynamicSelfCompositionPDR
 from dynamic_sc_pdr import SolverResult
@@ -113,8 +113,9 @@ def main():
             pp_delta = pp_end - pp_start
             print_result(pp_delta, delta, solver_result)
             table += solver_result.to_table_format(pp_delta, delta)
-        except:
-            print("Unexpected error:", sys.exc_info()[0])
+        except Exception as a:
+            print("Unexpected error:", e)
+            traceback.print_exc(file=sys.stdout)
             table += curr_file + ";\t" + str(0) + ";\t" + str(0) + ";\t" + "F" + ";" + str(0) + ";" + str(0) + "\n"
     if print_table:
         print(table)
