@@ -114,7 +114,7 @@ def main():
             print_result(pp_delta, delta, solver_result)
             table += solver_result.to_table_format(pp_delta, delta)
         except Exception as a:
-            print("Unexpected error:", e)
+            print("Unexpected error:", a)
             traceback.print_exc(file=sys.stdout)
             table += curr_file + ";\t" + str(0) + ";\t" + str(0) + ";\t" + "F" + ";" + str(0) + ";" + str(0) + "\n"
     if print_table:

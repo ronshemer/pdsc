@@ -14,6 +14,13 @@ class ExplicitComposition:
                                            self.ctx)
         return composition_conditions
 
+    def print(self):
+        print("composition function:")
+        for state, next_step in reversed(self.state_to_next_step):
+            print(self.dp.abstract_state_to_cond(state)) 
+            print("=>")
+            print(next_step)
+
     def change_next_step(self, state, new_next=None):
         tuple = None
         for s, n in self.state_to_next_step:

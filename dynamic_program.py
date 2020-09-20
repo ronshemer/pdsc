@@ -39,6 +39,8 @@ class DynamicProgram:
         self.bad_decl = self.Bad.decl()
         self.bad_rule = None
         self.all_end = None
+        self.zero_end=None
+        self.one_end=None
         self.bad_extensions = []
         self.exits = None
         self.ret_var_name = None
@@ -769,6 +771,8 @@ class DynamicProgram:
                 self.exits.append(exit_body)
         temp_exits = list(self.exits)
         temp_exits.append(self.ctx)
+        self.zero_end=self.exits[0]
+        self.one_end=self.exits[1]
         self.all_end = z3.And(*temp_exits)
 
     def set_trs(self, tr_tuples, inv_varsp):
@@ -960,15 +964,18 @@ class DynamicProgram:
         return ret
 
     def mk_init_rule(self):
+        left = self.mk_init()
+        right = self.inv_relation
+        self.init_rule = z3.Implies(left, right)
+        return self.init_rule
+    
+    def mk_init(self):
         temp = list(self.inits)
         temp.append(self.rel_init)
         if self.predicate_tuples is not None:
             temp.append(self.mk_h())
         temp.append(self.ctx)
-        left = z3.And(*temp)
-        right = self.inv_relation
-        self.init_rule = z3.Implies(left, right)
-        return self.init_rule
+        return z3.And(*temp)
 
     def mk_bad_rule(self):
         if self.rel_bad is None:
@@ -1016,82 +1023,6 @@ class DynamicProgram:
                                         self.ctx)
             else:
                 if self.k == 2:
-                    # array_insert2 composition
-                    # pc0 = self.get_concrete_var_by_name("pc_0")
-                    # pc1 = self.get_concrete_var_by_name("pc_1")
-                    # i0 = self.get_concrete_var_by_name("i_0")
-                    # i1 = self.get_concrete_var_by_name("i_1")
-                    # len0 = self.get_concrete_var_by_name("len_0")
-                    # len1 = self.get_concrete_var_by_name("len_1")
-                    # h0 = self.get_concrete_var_by_name("h_0")
-                    # h1 = self.get_concrete_var_by_name("h_1")
-                    # array0 = self.get_concrete_var_by_name("array_0")
-                    # array1 = self.get_concrete_var_by_name("array_1")
-                    # copy0_cond = z3.And(pc0<3,z3.Or(pc0!=0,z3.Or(i0==len0-1,h0>=z3.Select(array0,i0),self.ctx),self.ctx), z3.Or(z3.And(pc1==0,i1!=len1-1,h1<z3.Select(array1,i1),self.ctx),pc1==3,self.ctx),self.ctx)
-                    # copy1_cond = z3.And(pc1<3,z3.Or(pc1!=0,z3.Or(i1==len1-1,h1>=z3.Select(array1,i1),self.ctx),self.ctx), z3.Or(z3.And(pc0==0,i0!=len0-1,h0<z3.Select(array0,i0),self.ctx),pc0==3,self.ctx),self.ctx)
-                    # copy0 = z3.And(copy0_cond,self.trs[0], self.mk_self_loop(1), self.ctx)
-                    # copy1 = z3.And(copy1_cond,self.trs[1], self.mk_self_loop(0), self.ctx)
-                    # both = z3.And(z3.Not(copy0_cond),z3.Not(copy1_cond),self.trs[0],self.trs[1], self.ctx)
-                    # gcd composition
-                    # a_0 = self.get_concrete_var_by_name("a_0")
-                    # a_1 = self.get_concrete_var_by_name("a_1")
-                    # b_0 = self.get_concrete_var_by_name("b_0")
-                    # copy0 = False
-                    # copy1 = z3.And(a_0==a_1-b_0,self.trs[1], self.mk_self_loop(0), self.ctx)
-                    # both = z3.And(z3.Not(a_0==a_1-b_0),self.trs[0],self.trs[1], self.ctx)
-                    # array_insert composition
-                    # pc0 = self.get_concrete_var_by_name("pc_0")
-                    # pc1 = self.get_concrete_var_by_name("pc_1")
-                    # i0 = self.get_concrete_var_by_name("i_0")
-                    # i1 = self.get_concrete_var_by_name("i_1")
-                    # len0 = self.get_concrete_var_by_name("len_0")
-                    # len1 = self.get_concrete_var_by_name("len_1")
-                    # h0 = self.get_concrete_var_by_name("h_0")
-                    # h1 = self.get_concrete_var_by_name("h_1")
-                    # array0 = self.get_concrete_var_by_name("array_0")
-                    # array1 = self.get_concrete_var_by_name("array_1")
-                    # copy0_cond = z3.And(pc0<3,z3.Or(pc0>0,z3.Or(i0>=len0,h0>=z3.Select(array0,i0),self.ctx),self.ctx), z3.Or(z3.And(pc1==0,i1<len1,h1<z3.Select(array1,i1),self.ctx),pc1==3,self.ctx),self.ctx)
-                    # copy1_cond = z3.And(pc1<3,z3.Or(pc1>0,z3.Or(i1>=len1,h1>=z3.Select(array1,i1),self.ctx),self.ctx), z3.Or(z3.And(pc0==0,i0<len0,h0<z3.Select(array0,i0),self.ctx),pc0==3,self.ctx),self.ctx)
-                    # copy0 = z3.And(copy0_cond,self.trs[0], self.mk_self_loop(1), self.ctx)
-                    # copy1 = z3.And(copy1_cond,self.trs[1], self.mk_self_loop(0), self.ctx)
-                    # both = z3.And(z3.Not(copy0_cond),z3.Not(copy1_cond),self.trs[0],self.trs[1], self.ctx)
-                    # 2loops_pc composition
-                    # pc0 = self.get_concrete_var_by_name("pc_0")
-                    # pc1 = self.get_concrete_var_by_name("pc_1")
-                    # copy0_cond = z3.And(pc0==1, z3.Or(pc1==0,pc1==2,self.ctx),self.ctx)
-                    # copy1_cond = z3.And(pc1==1, z3.Or(pc0==0,pc0==2,self.ctx),self.ctx)
-                    # copy0 = z3.And(copy0_cond,self.trs[0], self.mk_self_loop(1), self.ctx)
-                    # copy1 = z3.And(copy1_cond,self.trs[1], self.mk_self_loop(0), self.ctx)
-                    # both = z3.And(z3.Not(z3.Or(copy0_cond,copy1_cond,self.ctx)),self.trs[0],self.trs[1], self.ctx)
-                    # squares sum composition
-                    # a_0 = self.get_concrete_var_by_name("a_0")
-                    # a_1 = self.get_concrete_var_by_name("a_1")
-                    # copy0 = z3.And(a_0<a_1,self.trs[0], self.mk_self_loop(1), self.ctx)
-                    # copy1 = False
-                    # both = z3.And(z3.Not(a_0<a_1),self.trs[0],self.trs[1], self.ctx)
-                    # shared array composition
-                    # pc_0 = self.get_concrete_var_by_name("pc_0")
-                    # pc_1 = self.get_concrete_var_by_name("pc_1")
-                    # curr_0 = self.get_concrete_var_by_name("curr_0")
-                    # toInsert_0 = self.get_concrete_var_by_name("toInsert_0")
-                    # len_0 = self.get_concrete_var_by_name("len_0")
-                    # j_0 = self.get_concrete_var_by_name("j_0")
-                    # curr_1 = self.get_concrete_var_by_name("curr_1")
-                    # toInsert_1 = self.get_concrete_var_by_name("toInsert_1")
-                    # len_1 = self.get_concrete_var_by_name("len_1")
-                    # j_1 = self.get_concrete_var_by_name("j_1")
-                    # cond_0 = z3.And(pc_0 == 0,z3.Not(z3.And(curr_0 < toInsert_0, j_0 < len_0,self.ctx)),pc_1 == 0, curr_1 < toInsert_1, j_1 < len_1,self.ctx)
-                    # cond_1 = z3.And(pc_1 == 0, z3.Not(z3.And(curr_1 < toInsert_1, j_1 < len_1, self.ctx)), pc_0 == 0,
-                    #                 curr_0 < toInsert_0, j_0 < len_0, self.ctx)
-                    # move_0 = z3.Or(z3.And(pc_0 == 1, pc_1 != 1,self.ctx),cond_0,self.ctx)
-                    # move_1 = z3.Or(z3.And(pc_1 == 1, pc_0 != 1, self.ctx),cond_1,self.ctx)
-                    #
-                    # copy0 = z3.And(move_0, self.trs[0],
-                    #                self.mk_self_loop(1), self.ctx)
-                    # copy1 = z3.And(move_1, self.trs[1],
-                    #                self.mk_self_loop(0), self.ctx)
-                    # both = z3.And(z3.And(z3.Not(move_0), z3.Not(move_1), self.ctx), self.trs[0], self.trs[1],
-                    #               self.ctx)
                     copy0 = z3.And(self.composition_var == 0, self.trs[0],
                                    self.mk_self_loop(1), self.ctx)
                     copy1 = z3.And(self.composition_var == 1, self.trs[1],
@@ -1122,6 +1053,9 @@ class DynamicProgram:
                         self.sc_tr = z3.And(self.composition_var == self.composition_func.as_formula(), self.sc_tr,
                                             self.ctx)
         return self.sc_tr
+
+    def mk_copy_0(self):
+        return z3.And(self.trs[0], self.mk_self_loop(1), self.ctx)
 
     def update_trs_with_self_loop(self):
         if not self.updated_trs_self_loop:
@@ -1172,6 +1106,10 @@ class DynamicProgram:
         self.composition_func.change_next_step(state, composition)
 
     def abstract_state_to_cond(self, state):
+        conjuncts = self.get_abstract_state_conjuncts(state)
+        return z3.And(*conjuncts)
+    
+    def get_abstract_state_conjuncts(self, state):
         conjuncts = []
         i = 0
         pc_indices = self.get_pc_indices()
@@ -1186,7 +1124,7 @@ class DynamicProgram:
                 conjuncts.append(z3.Not(self.abstract_var_to_cond_tuples[(i - copy_id) if self.has_pc else i][1]))
             i += 1
         conjuncts.append(self.ctx)
-        return z3.And(*conjuncts)
+        return conjuncts
 
     def extend_bad(self, state):
         if self.use_explicit_conposition_function:
@@ -1202,7 +1140,7 @@ class DynamicProgram:
 
     def mk_h_p(self):
         if self.h_p is None:
-            conjuncts = [pred_var_p == (cond) for (pred_var_p, cond) in self.abstract_var_p_to_cond_tuples]
+            conjuncts = list(set([pred_var_p == (cond) for (pred_var_p, cond) in self.abstract_var_p_to_cond_tuples]))
             conjuncts.append(self.ctx)
             self.h_p = z3.And(*conjuncts)
         return self.h_p
@@ -1233,9 +1171,6 @@ class DynamicProgram:
     def mk_dynamic_rules(self):
         self.mk_tr_rule()
         self.mk_bad_rule()
-
-    def is_predicate_abstraction(self):
-        return self.is_predicate_abstraction
 
     def get_pc_indices(self):
         return [x * (1 + len(self.predicate_tuples)) for x in range(self.k)] if self.has_pc else []

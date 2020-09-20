@@ -5,14 +5,15 @@
     "version": "0.2.0",
     "configurations": [
 
+
+
         {
             "name": "Python: Module",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "pdsc.py",
             "console": "integratedTerminal",
-            "args": ["-comparator", "-f", "comparators_C/ArrayInt-false.c", "-p", "2" ,"-log"],
-            "sudo": true
+            "args": ["-semantic", "-f", "/home/ron/pdsc/semantic_SMT2/Power_min.smt2","-log"],
         }
     ]
 }

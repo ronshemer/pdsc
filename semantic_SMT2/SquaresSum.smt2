@@ -30,7 +30,7 @@
 (declare-rel c0_eq_c1 (Int Int Int))
  (rule (=> (= (rel c 0) (rel c 1)) (c0_eq_c1 a b c)))
 (declare-rel a0_lt_a1 (Int Int Int))
- (rule (=> (<= (rel a 0) (rel a 1)) (a0_lt_a1 a b c)))
+ (rule (=> (< (rel a 0) (rel a 1)) (a0_lt_a1 a b c)))
 (declare-rel a0_eq_a1 (Int Int Int))
  (rule (=> (= (rel a 0) (rel a 1)) (a0_eq_a1 a b c)))
 (declare-rel b0_gt_b1 (Int Int Int))
