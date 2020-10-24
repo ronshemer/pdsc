@@ -94,41 +94,12 @@ class DynamicSelfCompositionPDR:
 
         inv = self.get_invariant()
         if self.dynamic_program.is_predicate_abstraction:
-            #self.check_one_step(inv)
             if not self.check_starvation(inv):
                 # invariant starves at least one copy
                 self.print_statistics()
                 return SolverResult(self.filename, "starvation", self.smt_queries_count,num_preds)
         self.print_statistics()
         return SolverResult(self.filename, "success", self.smt_queries_count,num_preds,str(inv))
-
-    def check_one_step(self,inv):
-        # experimental stuff
-        start_state = self.dynamic_program.get_abstract_state_conjuncts(self.dynamic_program.composition_func.state_to_next_step[0][0])
-        start_state_cond = self.dynamic_program.abstract_state_to_cond(self.dynamic_program.composition_func.state_to_next_step[0][0])
-        init = self.dynamic_program.mk_init()
-        solver = z3.Solver(ctx=self.ctx)
-        # solver.add(start_state)
-        # solver.add(init)
-        # solver.add(z3.Not(self.dynamic_program.get_concrete_var_by_name("zp_1")>0))
-        # solver.add(start_state_cond)
-        solver.add(inv)
-        solver.add(self.dynamic_program.mk_h())
-        solver.add(self.dynamic_program.mk_sc_tr())
-        solver.add(self.dynamic_program.mk_h_p())
-        invp = self.get_inv_p(inv, z3)
-        solver.add(invp)
-        ############################################################
-        #it seems that inv /\ h /\ sc_tr /\ hp /\ invp in unsat
-        #even though we should have inv /\ h /\ sc_tr /\ hp -> invp
-        ############################################################
-        print(solver.to_smt2())
-        if z3.sat == solver.check():
-            print(solver.model())
-        print("")
-
-    def get_inv_p(self, inv, z3):
-        return z3.substitute(inv, self.dynamic_program.pred_var_to_varp_pairs)
 
     def block_or_extend_bad(self, trace):
         if len(trace) <= 1:
