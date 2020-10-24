@@ -125,11 +125,8 @@ class DynamicSelfCompositionPDR:
                 if self.print_log:
                     print("Blocking composition assignment " + str(bad_predecessor_assignment) + " for state\n " + bad_predecessor.pretty_print(self.dynamic_program) + "\n")
                 self.blocked_compositions[bad_predecessor].append(bad_predecessor_assignment)
-                if self.dynamic_program.use_explicit_conposition_function:
-                    self.dynamic_program.change_assignment(bad_predecessor, self.get_next_assignment(bad_predecessor))
-                    self.dynamic_program.sc_tr = None
-                else:
-                    self.dynamic_program.block_assignment(bad_predecessor, bad_predecessor_assignment)
+                self.dynamic_program.change_assignment(bad_predecessor, self.get_next_assignment(bad_predecessor))
+                self.dynamic_program.sc_tr = None
                 break
         self.dynamic_program.mk_dynamic_rules()
         return True

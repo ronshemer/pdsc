@@ -59,9 +59,7 @@ class DynamicProgram:
         self.loops = None
         self.updated_trs_self_loop = False
 
-        self.composition_var = z3.Int("composition", ctx)  # self composition directive
-        self.composition_var_p = z3.Int("composition_p", ctx)
-        self.declared_vars = [self.composition_var, self.composition_var_p]
+        self.declared_vars = []
         self.blocked_exprs = []
 
         self.abstract_var_to_cond_tuples = []
@@ -74,6 +72,8 @@ class DynamicProgram:
         self.abstract_var_names = None
         self.copy_id_to_predicate_tuples = {}
         #self.pred_var_to_varp_pairs = []
+        self.composition_var = z3.Int("composition", ctx)  # self composition directive
+        self.composition_var_p = z3.Int("composition_p", ctx)
 
         self.h_p = None
         self.h = None
@@ -84,7 +84,6 @@ class DynamicProgram:
 
         self.has_pc = None
 
-        self.use_explicit_conposition_function = False
         self.composition_func = ExplicitComposition(self, self.ctx)
 
         self.quantified_vars = []
@@ -830,7 +829,7 @@ class DynamicProgram:
         for i in range(self.k):
             duplicated_vars.extend([vi for v, vi in self.get_copy_vars_subts(inv_vars, i, False)])
         self.declared_vars.extend(duplicated_vars)
-        self.inv_vars = self.extend_with_composition_var(duplicated_vars)
+        self.inv_vars = duplicated_vars
         self.inv_relation = self.Inv(*self.inv_vars)
 
         duplicated_vars = []
@@ -858,7 +857,7 @@ class DynamicProgram:
         inv = z3.Function("Inv", *sig)
         self.Inv = inv
         duplicated_preds = []
-        self.inv_vars = [self.composition_var]
+        self.inv_vars = []
         for i in range(self.k):
             duplicated_preds_i = self.get_copy_abstract_vars(i)
             duplicated_preds.extend(duplicated_preds_i)
@@ -875,7 +874,7 @@ class DynamicProgram:
         self.abstract_var_names = [str(v) for v in (duplicated_preds + rel_preds_vars)]
 
         duplicated_preds_p = []
-        self.inv_varsp = [self.composition_var_p]
+        self.inv_varsp = []
         for i in range(self.k):
             if self.has_pc:
                 self.inv_varsp.append(self.get_pcp_of_copy(i))
@@ -951,18 +950,8 @@ class DynamicProgram:
     def get_vars_to_declare(self):
         return self.declared_vars + self.quantified_vars
 
-    def extend_with_composition_var(self, inv_vars):
-        ret = [self.composition_var]
-        ret.extend(inv_vars)
-        return ret
-
-    def extend_with_compositionp_var(self, inv_vars):
-        ret = [self.composition_var_p]
-        ret.extend(inv_vars)
-        return ret
-
     def extend_inv_vars_p(self, inv_vars_p):
-        ret = [self.composition_var_p]
+        ret = []
         ret.extend(inv_vars_p)
         return ret
 
@@ -1033,9 +1022,7 @@ class DynamicProgram:
                     both = z3.And(self.composition_var == 2, self.trs[0], self.trs[1],
                                   self.ctx)
                     self.sc_tr = z3.Or(copy0, copy1, both, self.ctx)
-                    if self.use_explicit_conposition_function:
-                        self.sc_tr = z3.And(self.composition_var == self.composition_func.as_formula(), self.sc_tr,
-                                            self.ctx)
+                    self.sc_tr = z3.And(self.composition_var == self.composition_func.as_formula(), self.sc_tr, self.ctx)
                 if self.k == 3:  # bitwise its cpoy2|copy1|copy0
                     copy0 = z3.And(self.composition_var == 1, self.trs[0],
                                    self.mk_self_loop(1), self.mk_self_loop(2), self.ctx)
@@ -1052,9 +1039,7 @@ class DynamicProgram:
                     all_copies = z3.And(self.composition_var == 7, self.trs[0], self.trs[1], self.trs[2],
                                         self.ctx)
                     self.sc_tr = z3.Or(copy0, copy1, copy2, copies01, copies12, copies02, all_copies, self.ctx)
-                    if self.use_explicit_conposition_function:
-                        self.sc_tr = z3.And(self.composition_var == self.composition_func.as_formula(), self.sc_tr,
-                                            self.ctx)
+                    self.sc_tr = z3.And(self.composition_var == self.composition_func.as_formula(), self.sc_tr, self.ctx)
         return self.sc_tr
 
     def mk_copy_0(self):
@@ -1101,10 +1086,6 @@ class DynamicProgram:
     def set_rel_bad(self, rel_bad):
         self.rel_bad = rel_bad
 
-    def block_assignment(self, state, composition):
-        self.blocked_exprs.append(
-            z3.Not(z3.And(self.abstract_state_to_cond(state), self.composition_var == composition, self.ctx)))
-
     def change_assignment(self, state, composition):
         self.composition_func.change_next_step(state, composition)
 
@@ -1130,8 +1111,7 @@ class DynamicProgram:
         return conjuncts
 
     def extend_bad(self, state):
-        if self.use_explicit_conposition_function:
-            self.composition_func.remove_stete(state)
+        self.composition_func.remove_stete(state)
         self.bad_extensions.append(self.abstract_state_to_cond(state))
 
     def mk_h(self):
