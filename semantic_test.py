@@ -15,6 +15,7 @@ class TestSemanticExamples(unittest.TestCase):
     def create_semantic_solver(self, filename):
         return DynamicSelfCompositionPDR(filename, force_predicate_abstraction=True, is_comparator=False, bmc=True, explicit_conposition_function=True)
 
+    @unittest.skip("not from paper")
     def test_Sum_pc(self):
         filename = "./semantic_SMT2/Sum_pc.smt2"
         solver = self.create_semantic_solver(filename)
@@ -26,7 +27,8 @@ class TestSemanticExamples(unittest.TestCase):
         solver = self.create_semantic_solver(filename)
         result = solver.solve()
         self.assertEquals(result.status, SolverResult.SUCCESS)
-
+    
+    @unittest.skip("not from paper")
     def test_ArrayInsert2(self):
         filename = "./semantic_SMT2/ArrayInsert2.smt2"
         solver = self.create_semantic_solver(filename)
@@ -47,7 +49,7 @@ class TestSemanticExamples(unittest.TestCase):
         result = solver.solve()
         self.assertEquals(result.status, SolverResult.SUCCESS)
 
-    def test_Power(self):
+    def test_DoubleSquare(self):
         filename = "./semantic_SMT2/Power.smt2"
         solver = self.create_semantic_solver(filename)
         result = solver.solve()
@@ -66,7 +68,7 @@ class TestSemanticExamples(unittest.TestCase):
         result = solver.solve()
         self.assertEquals(result.status, SolverResult.SUCCESS)
 
-    def test_Sum(self):
+    def test_HalfSquare(self):
         filename = "./semantic_SMT2/Sum.smt2"
         solver = self.create_semantic_solver(filename)
         result = solver.solve()

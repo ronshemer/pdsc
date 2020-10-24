@@ -44,7 +44,7 @@ class SolverResult:
             return "Failed to prove (starvation detected)"
 
 class DynamicSelfCompositionPDR:
-    def __init__(self, filename, force_predicate_abstraction, is_comparator, explicit_conposition_function, method_name=None,concrete_array_vars=False,bmc=False,print_log=False,prop=None):
+    def __init__(self, filename, force_predicate_abstraction, is_comparator, explicit_conposition_function, method_name=None,concrete_array_vars=False,bmc=False,print_log=False,prop=None, import_lemmas=False):
         if prop is not None and prop == 1:
             prop=0
         self.force_predicate_abstraction = force_predicate_abstraction
@@ -60,6 +60,7 @@ class DynamicSelfCompositionPDR:
         self.longest_abstract_trace = 0
         self.print_log=print_log
         self.filename = filename
+        self.is_import_lemmas = import_lemmas
 
     def solve(self):
         num_preds = len(self.dynamic_program.abstract_var_names) if self.dynamic_program.is_predicate_abstraction else 0
@@ -93,7 +94,7 @@ class DynamicSelfCompositionPDR:
 
         inv = self.get_invariant()
         if self.dynamic_program.is_predicate_abstraction:
-            self.check_one_step(inv)
+            #self.check_one_step(inv)
             if not self.check_starvation(inv):
                 # invariant starves at least one copy
                 self.print_statistics()
@@ -109,17 +110,25 @@ class DynamicSelfCompositionPDR:
         solver = z3.Solver(ctx=self.ctx)
         # solver.add(start_state)
         # solver.add(init)
-        # solver.add(self.dynamic_program.mk_sc_tr())
-        # solver.add(self.dynamic_program.mk_h_p())
         # solver.add(z3.Not(self.dynamic_program.get_concrete_var_by_name("zp_1")>0))
-        solver.add(start_state_cond)
-        solver.add(self.dynamic_program.mk_h())
+        # solver.add(start_state_cond)
         solver.add(inv)
+        solver.add(self.dynamic_program.mk_h())
+        solver.add(self.dynamic_program.mk_sc_tr())
+        solver.add(self.dynamic_program.mk_h_p())
+        invp = self.get_inv_p(inv, z3)
+        solver.add(invp)
+        ############################################################
+        #it seems that inv /\ h /\ sc_tr /\ hp /\ invp in unsat
+        #even though we should have inv /\ h /\ sc_tr /\ hp -> invp
+        ############################################################
         print(solver.to_smt2())
         if z3.sat == solver.check():
             print(solver.model())
         print("")
 
+    def get_inv_p(self, inv, z3):
+        return z3.substitute(inv, self.dynamic_program.pred_var_to_varp_pairs)
 
     def block_or_extend_bad(self, trace):
         if len(trace) <= 1:
@@ -168,11 +177,12 @@ class DynamicSelfCompositionPDR:
     def find_cex(self):
         self.smt_queries_count += 1
         self.init_fp()
-        self.import_lemmas()
+        if self.is_import_lemmas:
+            self.import_lemmas()
         self.load_dynamic_program()
 
         res = self.fp.query(self.dynamic_program.get_bad())
-        if not self.dynamic_program.default_composition:
+        if not self.dynamic_program.default_composition and self.is_import_lemmas:
             self.export_inv_lemmas()
         if res == z3.unsat:
             return None
@@ -198,7 +208,7 @@ class DynamicSelfCompositionPDR:
             self.fp.add_cover(level, inv_decl, prop)
 
     def init_fp(self):
-        z3.enable_trace('spacer')
+        # z3.enable_trace('spacer')
         fp = z3.Fixedpoint(ctx=self.ctx)  # fixpoint solver
         fp.set(engine='spacer')
         fp.set('spacer.eq_prop', False)
@@ -281,7 +291,7 @@ class DynamicSelfCompositionPDR:
     def check_starvation(self, inv):
         solver = z3.Solver(ctx=self.ctx)
         # print composition function for invariant
-        self.dynamic_program.composition_func.print()
+        # self.dynamic_program.composition_func.print()
         solver.add(self.dynamic_program.subst_predicates(inv))
         solver.add(self.dynamic_program.subst_predicates(self.dynamic_program.get_all_end()))
         if z3.unsat == solver.check():

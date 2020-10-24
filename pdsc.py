@@ -86,6 +86,7 @@ def main():
     input_type_group.add_argument('-semantic',help="parse and verify an SMT2 file with a k-safety problem", action="store_true")
     input_type_group.add_argument('-comparator',help="parse and verify a C file with a comparator problem", action="store_true")
     parser.add_argument('-f','--file',required=True,help="path to input file",type=lambda x: is_valid_file(parser, x))
+    parser.add_argument('-import_lemmas',help="remember lemmas between iterations",action="store_true")
     parser.add_argument('-p','--property',help="property 1,2 or 3 of comparator", type=check_prop)
     parser.add_argument('-log',help='print traces', action="store_true")
     args = parser.parse_args()
@@ -104,7 +105,7 @@ def main():
             filename = get_smt2(curr_file) if args.comparator else curr_file
             print("PDSC: Verifying " + filename)
             pp_start = datetime.datetime.now()
-            solver = DynamicSelfCompositionPDR(filename, force_predicate_abstraction=True, is_comparator=args.comparator, method_name="compare", bmc="True", explicit_conposition_function=True,print_log=args.log,prop=args.property)
+            solver = DynamicSelfCompositionPDR(filename, force_predicate_abstraction=True, is_comparator=args.comparator, method_name="compare", bmc="True", explicit_conposition_function=True,print_log=args.log,prop=args.property, import_lemmas=args.import_lemmas)
             pp_end = datetime.datetime.now()
             start = datetime.datetime.now()
             solver_result = solver.solve()

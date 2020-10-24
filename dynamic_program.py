@@ -73,6 +73,7 @@ class DynamicProgram:
         self.pred_id_to_predp_var = {}
         self.abstract_var_names = None
         self.copy_id_to_predicate_tuples = {}
+        #self.pred_var_to_varp_pairs = []
 
         self.h_p = None
         self.h = None
@@ -132,6 +133,7 @@ class DynamicProgram:
                 sc_pred = z3.Bool(str(pred_var) + "_" + str(copy_id), self.ctx)
                 sc_predp = z3.Bool(str(pred_var) + "_" + str(copy_id) + "p", self.ctx)
                 self.pred_id_to_predp_var[pred_id] = sc_predp
+                #self.pred_var_to_varp_pairs.append((sc_pred,sc_predp))
                 self.copy_id_to_abstract_vars[copy_id].append(sc_pred)
 
                 subst = self.get_copy_vars_subts(xs, copy_id, False)
@@ -896,6 +898,7 @@ class DynamicProgram:
             xps = [xp for x, xp in xs_to_xps]
             tuple = (pred_p, xps, fml)
             primed.append(tuple)
+            #self.pred_var_to_varp_pairs.append((pred,pred_p))
         predicate_tuples.extend(primed)
         self.abstract_var_p_to_cond_tuples.extend([(pred, cond) for pred, xs, cond in primed])
         preds = [pred for pred, xs, fml in primed]
