@@ -59,7 +59,6 @@ class DynamicProgram:
         self.loops = None
         self.updated_trs_self_loop = False
 
-        self.declared_vars = []
         self.blocked_exprs = []
 
         self.abstract_var_to_cond_tuples = []
@@ -74,6 +73,7 @@ class DynamicProgram:
         #self.pred_var_to_varp_pairs = []
         self.composition_var = z3.Int("composition", ctx)  # self composition directive
         self.composition_var_p = z3.Int("composition_p", ctx)
+        self.declared_vars = [self.composition_var, self.composition_var_p]
 
         self.h_p = None
         self.h = None
@@ -829,7 +829,7 @@ class DynamicProgram:
         for i in range(self.k):
             duplicated_vars.extend([vi for v, vi in self.get_copy_vars_subts(inv_vars, i, False)])
         self.declared_vars.extend(duplicated_vars)
-        self.inv_vars = duplicated_vars
+        self.inv_vars = self.extend_with_composition_var(duplicated_vars)
         self.inv_relation = self.Inv(*self.inv_vars)
 
         duplicated_vars = []
@@ -857,7 +857,7 @@ class DynamicProgram:
         inv = z3.Function("Inv", *sig)
         self.Inv = inv
         duplicated_preds = []
-        self.inv_vars = []
+        self.inv_vars = [self.composition_var]
         for i in range(self.k):
             duplicated_preds_i = self.get_copy_abstract_vars(i)
             duplicated_preds.extend(duplicated_preds_i)
@@ -874,7 +874,7 @@ class DynamicProgram:
         self.abstract_var_names = [str(v) for v in (duplicated_preds + rel_preds_vars)]
 
         duplicated_preds_p = []
-        self.inv_varsp = []
+        self.inv_varsp = [self.composition_var_p]
         for i in range(self.k):
             if self.has_pc:
                 self.inv_varsp.append(self.get_pcp_of_copy(i))
@@ -904,6 +904,16 @@ class DynamicProgram:
         self.declared_vars.extend(preds)
         return preds
 
+    def extend_with_composition_var(self, inv_vars):
+        ret = [self.composition_var]
+        ret.extend(inv_vars)
+        return ret
+    
+    def extend_with_compositionp_var(self, inv_vars):
+        ret = [self.composition_var_p]
+        ret.extend(inv_vars)
+        return ret
+
     def get_pcp_of_copy(self, copy_id):
         for v in self.copy_id_to_concrete_vars[copy_id].values():
             if str(v) == "pc_p_" + str(copy_id):
@@ -915,7 +925,7 @@ class DynamicProgram:
                 return v
 
     def extend_inv_varsp(self, inv_vars, inv_varsp):
-        ret = []
+        ret = [self.composition_var_p]
         for v in inv_vars:
             if v in inv_varsp:
                 ret.append(inv_varsp[v])
