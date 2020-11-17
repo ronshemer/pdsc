@@ -1,7 +1,7 @@
 import unittest
 import time
-from dynamic_sc_pdr import DynamicSelfCompositionPDR 
-from dynamic_sc_pdr import SolverResult 
+from dynamic_sc_pdr import DynamicSelfCompositionPDR
+from dynamic_sc_pdr import SolverResult
 
 class TestSemanticExamples(unittest.TestCase):
 
@@ -13,7 +13,7 @@ class TestSemanticExamples(unittest.TestCase):
         print(str('%s: %.3f' % (self.id(), t))+"s")
 
     def create_semantic_solver(self, filename):
-        return DynamicSelfCompositionPDR(filename, force_predicate_abstraction=True, is_comparator=False, bmc=True, explicit_conposition_function=True)
+        return DynamicSelfCompositionPDR(filename, force_predicate_abstraction=True, is_comparator=False, bmc=True, explicit_conposition_function=True,print_log=True,import_lemmas=False)
 
     @unittest.skip("not from paper")
     def test_Sum_pc(self):

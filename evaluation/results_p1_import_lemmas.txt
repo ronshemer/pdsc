@@ -1,0 +1,158 @@
+comparators_C/NameComparator-true.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Container-true.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/ArrayInt-true.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/IsoSprite-false-v1.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Time-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/ArrayInt-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/ColItem-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Node-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Word-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Solution-true.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/TextPosition-true.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/DataPoint-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Match-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/TextPosition-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/FileItem-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/IsoSprite-false-v2.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Solution-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Contact-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Container-false-v2.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/CatBPos-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/NzbFile-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/NzbFile-true.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Word-true.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Chromosome-true.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Container-false-v1.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/FileItem-true.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Node-true.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/NameComparator-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Match-true.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/PokerHand-true.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Time-true.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/ColItem-true.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/Chromosome-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+comparators_C/PokerHand-false.c: Translating to smt2 with SeaHorn
+working with 8a6fe7e2a9cb04610bd20b0e9f799a9689481d4c80bbfeb7bf96343fb4357c07 (<Image: 'seahorn/seahorn:latest'>)
+bash run_seahorn.sh
+Unexpected error: 'NoneType' object has no attribute 'get_id'
+Traceback (most recent call last):
+  File "pdsc.py", line 108, in main
+    solver = DynamicSelfCompositionPDR(filename, force_predicate_abstraction=True, is_comparator=args.comparator, method_name="compare", bmc="True", explicit_conposition_function=True,print_log=args.log,prop=args.property, import_lemmas=args.import_lemmas)
+  File "/home/ron/pdsc/dynamic_sc_pdr.py", line 53, in __init__
+    self.dynamic_program = self.sc_program_from_file(filename, is_comparator, method_name,concrete_array_vars,prop)
+  File "/home/ron/pdsc/dynamic_sc_pdr.py", line 303, in sc_program_from_file
+    dp, entry_to_memory_map = comparator_transform(program_path, self.force_predicate_abstraction, method_name,prop)
+  File "/home/ron/pdsc/comparator_program_transformer.py", line 16, in comparator_transform
+    return Transformer(force_predicate_abstraction, method_name,entry_to_memory_map,prop).parse(file_path)
+  File "/home/ron/pdsc/comparator_program_transformer.py", line 82, in parse
+    self.update_dynamic_program(dp)
+  File "/home/ron/pdsc/comparator_program_transformer.py", line 672, in update_dynamic_program
+    dp.mk_pred_abstraction_inv(self.inv_varsp)
+  File "/home/ron/pdsc/dynamic_program.py", line 863, in mk_pred_abstraction_inv
+    duplicated_preds_i = self.get_copy_abstract_vars(i)
+  File "/home/ron/pdsc/dynamic_program.py", line 139, in get_copy_abstract_vars
+    subst = self.get_copy_vars_subts(xs, copy_id, False)
+  File "/home/ron/pdsc/dynamic_program.py", line 165, in get_copy_vars_subts
+    v_id = v.get_id()
+AttributeError: 'NoneType' object has no attribute 'get_id'
+/tmp/NameComparator-true.smt2;	0.116491;	0.48126800000000003;	Y;1;8
+/tmp/Container-true.smt2;	0.063303;	0.261752;	Y;1;9
+/tmp/ArrayInt-true.smt2;	0.100473;	0.5673;	Y;1;8
+/tmp/IsoSprite-false-v1.smt2;	0.211437;	0.33604100000000003;	N;7;1
+/tmp/Time-false.smt2;	0.21659;	0.29868300000000003;	N;6;5
+/tmp/ArrayInt-false.smt2;	0.101713;	0.5610850000000001;	Y;1;8
+/tmp/ColItem-false.smt2;	0.293795;	0.496345;	N;6;9
+/tmp/Node-false.smt2;	0.076031;	0.495414;	Y;1;11
+/tmp/Word-false.smt2;	6.665103;	7.657341000000001;	N;52;11
+/tmp/Solution-true.smt2;	0.066766;	0.308114;	Y;1;7
+/tmp/TextPosition-true.smt2;	0.081867;	0.385405;	Y;1;11
+/tmp/DataPoint-false.smt2;	0.292713;	0.5137700000000001;	N;6;7
+/tmp/Match-false.smt2;	0.264454;	0.433889;	N;6;7
+/tmp/TextPosition-false.smt2;	0.063251;	0.332755;	Y;1;9
+/tmp/FileItem-false.smt2;	0.041853;	0.153588;	Y;1;5
+/tmp/IsoSprite-false-v2.smt2;	0.421052;	0.8388100000000001;	N;6;13
+/tmp/Solution-false.smt2;	0.066161;	0.30891599999999997;	Y;1;7
+/tmp/Contact-false.smt2;	0.075596;	0.317692;	Y;1;7
+/tmp/Container-false-v2.smt2;	0.33643;	0.515118;	N;7;9
+/tmp/CatBPos-false.smt2;	0.303745;	0.579202;	N;6;11
+/tmp/NzbFile-false.smt2;	0.401208;	1.516606;	N;6;9
+/tmp/NzbFile-true.smt2;	3.137074;	4.1051210000000005;	Y;21;14
+/tmp/Word-true.smt2;	0.096749;	0.798665;	Y;1;10
+/tmp/Chromosome-true.smt2;	0.290875;	0.767678;	N;6;8
+/tmp/Container-false-v1.smt2;	0.281205;	0.435608;	N;6;9
+/tmp/FileItem-true.smt2;	0.047684;	0.190887;	Y;1;5
+/tmp/Node-true.smt2;	0.096519;	0.629354;	Y;1;11
+/tmp/NameComparator-false.smt2;	1.301271;	1.5967200000000001;	N;19;6
+/tmp/Match-true.smt2;	0.051392;	0.209372;	Y;1;7
+/tmp/PokerHand-true.smt2;	2.433377;	9.307932000000001;	Y;5;18
+/tmp/Time-true.smt2;	0.040771;	0.12754500000000002;	Y;1;5
+/tmp/ColItem-true.smt2;	0.059326;	0.286597;	Y;1;9
+/tmp/Chromosome-false.smt2;	0.424614;	2.474746;	N;6;7
+comparators_C/PokerHand-false.c;	0;	0;	F;0;0
+

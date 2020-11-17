@@ -184,6 +184,7 @@ class DynamicSelfCompositionPDR:
         fp.set('xform.inline_linear', False)  # performance once there is no need for debuging
         fp.set('xform.inline_eager', False)
         fp.set('xform.tail_simplifier_pve', False)
+        #fp.set('spacer.print_json','/home/ron/pdsc/pobvis_input/lemmas.json')
         self.fp = fp
 
     def init_bounded_fp(self,bound,ctx):

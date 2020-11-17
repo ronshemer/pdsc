@@ -1,0 +1,10 @@
+semantic_SMT2/ArrayInsert.smt2;	17.895317;	17.994792;	Y;100;16
+
+semantic_SMT2/ArrayIntMod.smt2;	64.794554;	65.010356;	Y;179;20
+
+semantic_SMT2/Power.smt2;	9.449177;	9.568302000000001;	Y;47;20
+
+semantic_SMT2/SquaresSum.smt2;	0.968077;	1.021614;	Y;4;9
+
+semantic_SMT2/Sum.smt2;	4.758674;	4.844997;	Y;41;13
+

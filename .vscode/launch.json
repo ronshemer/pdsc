@@ -13,7 +13,7 @@
             "request": "launch",
             "program": "pdsc.py",
             "console": "integratedTerminal",
-            "args": ["-semantic", "-f", "/home/ron/pdsc/semantic_SMT2/Power.smt2","-log", "-import_lemmas"],
+            "args": ["-semantic", "-f", "/home/ron/pdsc/semantic_SMT2/Power.smt2","-log"],
         }
     ]
 }
