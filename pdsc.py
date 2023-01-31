@@ -75,6 +75,7 @@ def get_smt2(c_file):
             print("working with "+container.id+" ("+str(container.image)+")")
             break
     seahorn_container.start()
+    copy_to_container(seahorn_container, 'run_seahorn.sh')
     copy_to_container(seahorn_container,c_file)
     seahorn_container.exec_run('bash run_seahorn.sh',workdir='/opt/seahorn')
     print ('bash run_seahorn.sh')
