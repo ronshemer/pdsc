@@ -26,10 +26,10 @@ class TestComparatorsP1(unittest.TestCase):
         )
 
     def test_ArrayInt_false(self):
-        filename = "./comparators_SMT2/ArrayInt-false.smt2"
+        filename = "tests/comparators_SMT2/ArrayInt-false.smt2"
         solver = self.create_comparator_solver(filename)
         result = solver.solve()
-        self.assertEquals(result.status, SolverResult.SUCCESS)
+        self.assertEqual(result.status, SolverResult.SUCCESS)
 
 if __name__ == '__main__':
     unittest.main()
