@@ -41,13 +41,13 @@ class TestComparatorsP2(unittest.TestCase):
         filename = "tests/comparators_SMT2/CatBPos-false.smt2"
         solver = self.create_comparator_solver(filename)
         result = solver.solve()
-        self.assertEqual(result.status, SolverResult.FAIL)
+        self.assertEqual(result.status, SolverResult.VIOLATED)
 
     def test_Chromosome_false(self):
         filename = "tests/comparators_SMT2/Chromosome-false.smt2"
         solver = self.create_comparator_solver(filename)
         result = solver.solve()
-        self.assertEqual(result.status, SolverResult.FAIL)
+        self.assertEqual(result.status, SolverResult.VIOLATED)
 
     def test_Chromosome_true(self):
         filename = "tests/comparators_SMT2/Chromosome-true.smt2"
@@ -65,25 +65,25 @@ class TestComparatorsP2(unittest.TestCase):
         filename = "tests/comparators_SMT2/ColItem-false.smt2"
         solver = self.create_comparator_solver(filename)
         result = solver.solve()
-        self.assertEqual(result.status, SolverResult.FAIL)
+        self.assertEqual(result.status, SolverResult.VIOLATED)
 
     def test_Contact_false(self):
         filename = "tests/comparators_SMT2/Contact-false.smt2"
         solver = self.create_comparator_solver(filename)
         result = solver.solve()
-        self.assertEqual(result.status, SolverResult.FAIL)
+        self.assertEqual(result.status, SolverResult.VIOLATED)
 
     def test_Container_false_v1(self):
         filename = "tests/comparators_SMT2/Container-false-v1.smt2"
         solver = self.create_comparator_solver(filename)
         result = solver.solve()
-        self.assertEqual(result.status, SolverResult.FAIL)
+        self.assertEqual(result.status, SolverResult.VIOLATED)
 
     def test_Container_false_v2(self):
         filename = "tests/comparators_SMT2/Container-false-v2.smt2"
         solver = self.create_comparator_solver(filename)
         result = solver.solve()
-        self.assertEqual(result.status, SolverResult.FAIL)
+        self.assertEqual(result.status, SolverResult.VIOLATED)
 
     def test_Container_true(self):
         filename = "tests/comparators_SMT2/Container-true.smt2"
@@ -95,7 +95,7 @@ class TestComparatorsP2(unittest.TestCase):
         filename = "tests/comparators_SMT2/DataPoint-false.smt2"
         solver = self.create_comparator_solver(filename)
         result = solver.solve()
-        self.assertEqual(result.status, SolverResult.FAIL)
+        self.assertEqual(result.status, SolverResult.VIOLATED)
 
     def test_FileItem_false(self):
         filename = "tests/comparators_SMT2/FileItem-false.smt2"
@@ -113,13 +113,13 @@ class TestComparatorsP2(unittest.TestCase):
         filename = "tests/comparators_SMT2/IsoSprite-false-v1.smt2"
         solver = self.create_comparator_solver(filename)
         result = solver.solve()
-        self.assertEqual(result.status, SolverResult.FAIL)
+        self.assertEqual(result.status, SolverResult.VIOLATED)
 
     def test_IsoSprite_false_v2(self):
         filename = "tests/comparators_SMT2/IsoSprite-false-v2.smt2"
         solver = self.create_comparator_solver(filename)
         result = solver.solve()
-        self.assertEqual(result.status, SolverResult.FAIL)
+        self.assertEqual(result.status, SolverResult.VIOLATED)
 
     def test_Match_false(self):
         filename = "tests/comparators_SMT2/Match-false.smt2"
@@ -215,7 +215,7 @@ class TestComparatorsP2(unittest.TestCase):
         filename = "tests/comparators_SMT2/Word-false.smt2"
         solver = self.create_comparator_solver(filename)
         result = solver.solve()
-        self.assertEqual(result.status, SolverResult.FAIL)
+        self.assertEqual(result.status, SolverResult.VIOLATED)
 
     def test_Word_true(self):
         filename = "tests/comparators_SMT2/Word-true.smt2"
