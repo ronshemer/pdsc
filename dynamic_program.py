@@ -925,7 +925,7 @@ class DynamicProgram:
                 return v
 
     def extend_inv_varsp(self, inv_vars, inv_varsp):
-        ret = [self.composition_var_p]
+        ret = []
         for v in inv_vars:
             if v in inv_varsp:
                 ret.append(inv_varsp[v])
